@@ -46,9 +46,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: npm ci
+      # npm install を使用する理由:
+      # 開発機が macOS ARM64 のため package-lock.json に
+      # linux-x64 用 Rollup optional package が含まれない。
+      # npm ci はロックにないパッケージをインストールできないため
+      # CI (Linux x64) では npm install が必要。
+      - name: npm install
         working-directory: frontend
-        run: npm ci
+        run: npm install
       - name: lint
         working-directory: frontend
         run: npm run lint
