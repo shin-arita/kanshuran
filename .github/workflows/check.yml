@@ -1,0 +1,57 @@
+name: check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  compose-config:
+    name: docker compose config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate docker compose
+        run: docker compose config --quiet
+
+  api:
+    name: api (vet / lint / test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: api/go.mod
+      - name: go mod download
+        working-directory: api
+        run: go mod download
+      - name: go vet
+        working-directory: api
+        run: go vet ./...
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          working-directory: api
+          version: v2.11.4
+      - name: go test
+        working-directory: api
+        run: go test ./...
+
+  frontend:
+    name: frontend (lint / test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: npm install
+        working-directory: frontend
+        run: npm install
+      - name: lint
+        working-directory: frontend
+        run: npm run lint
+      - name: test
+        working-directory: frontend
+        run: npm run test

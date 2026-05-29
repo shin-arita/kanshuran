@@ -104,3 +104,14 @@ curl http://localhost:8080/api/v1/health
 ## 次工程
 
 テーブル設計 → migration作成 → API本実装
+
+---
+
+## AI分担運用
+
+Claude Code / Codex / ChatGPT / 有田さんによる半自動化運用を採用しています。
+
+- [docs/ai/README.md](docs/ai/README.md) — 役割分担・概要
+- [docs/ai/workflow.md](docs/ai/workflow.md) — 作業フロー
+- [docs/ai/codex_review_template.md](docs/ai/codex_review_template.md) — Codexレビュー依頼テンプレート
+- [docs/ai/claude_code_template.md](docs/ai/claude_code_template.md) — Claude Code指示テンプレート

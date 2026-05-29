@@ -7,6 +7,8 @@
 | [development.md](./development.md) | 開発環境の起動・停止・確認方法 |
 | [roadmap/non_functional_roadmap.md](./roadmap/non_functional_roadmap.md) | 非機能ロードマップ |
 
+| [ai/README.md](./ai/README.md) | AI分担運用ガイド（Claude Code / Codex / ChatGPT / 有田さん） |
+
 ---
 
 ## 設計ドキュメント
