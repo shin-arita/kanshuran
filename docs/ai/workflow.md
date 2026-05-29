@@ -85,6 +85,57 @@ curl http://localhost:8080/health
 curl http://localhost:8080/api/v1/health
 ```
 
+---
+
+## GitHub CLI 運用
+
+GitHub画面へのコピペを減らし、CLI中心でPR・checks・Codexレビューを扱います。  
+事前に `gh auth login` が完了していることを前提とします。
+
+### 認証確認
+
+```bash
+gh auth status
+```
+
+### PR確認
+
+```bash
+gh pr view <PR番号>
+# 例
+gh pr view 1
+```
+
+### Checks確認
+
+```bash
+gh pr checks <PR番号>
+# 例
+gh pr checks 1
+```
+
+### PRコメント確認
+
+```bash
+gh pr view <PR番号> --comments
+```
+
+### Codex review依頼
+
+```bash
+gh pr comment <PR番号> --body "@codex review"
+```
+
+### 深掘りレビュー依頼（body-file形式）
+
+詳細な指示をMarkdownファイルで渡す場合:
+
+```bash
+gh pr comment <PR番号> --body-file docs/ai/review/example.md
+```
+
+---
+
 ## 参照
 
 - [codex_review_template.md](./codex_review_template.md)

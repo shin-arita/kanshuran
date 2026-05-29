@@ -28,6 +28,21 @@ AIはmainブランチへ直接mergeしません。
 
 ---
 
+## GitHub CLI
+
+GitHub操作はCLIを推奨します。`gh auth login` 済みを前提とします。
+
+```bash
+gh auth status                                  # 認証確認
+gh pr view 1                                    # PR確認
+gh pr checks 1                                  # Checks確認
+gh pr comment 1 --body "@codex review"          # Codex review依頼
+```
+
+詳細は [workflow.md](./workflow.md) を参照してください。
+
+---
+
 ## 参照すべきドキュメント
 
 レビュー・実装前に以下を必ず参照してください。
