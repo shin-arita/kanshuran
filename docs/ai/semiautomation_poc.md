@@ -2,20 +2,21 @@
 
 ## 目的
 
-Claude Code、Codex、ChatGPT、有田さんの分担フローをGitHub PR上で検証する。
+観酒覧の標準AI分担フローをGitHub PR上で検証する。
 
 ## 検証する流れ
 
-1. Claude Codeがdocs-only変更を行う
-2. 有田さんがgit diff / git statusを確認する
-3. 有田さんがbranch / commit / push / PRを作成する
-4. Codex reviewを依頼する
-5. Codex指摘をChatGPTに渡す
-6. ChatGPTが修正指示を作る
-7. Claude Codeが修正する
-8. Codex再レビューを行う
-9. ChatGPTが工程判断する
-10. 有田さんがmerge判断する
+1. ChatGPTがClaude Code指示MDを作成する
+2. Claude Codeがdocs-only変更を行う
+3. 有田さんがgit diff / git statusを確認する
+4. 有田さんがbranch / commit / push / PRを作成する
+5. Codex reviewを依頼する
+6. Codex指摘をChatGPTに渡す
+7. ChatGPTが修正指示を作る
+8. Claude Codeが修正する
+9. Codex再レビューを行う
+10. ChatGPTが工程判断する
+11. 有田さんがmerge判断する
 
 ## 確認項目
 
