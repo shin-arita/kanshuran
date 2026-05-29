@@ -1,0 +1,29 @@
+# ローカル環境
+.env
+.DS_Store
+
+# Go ビルド成果物
+api/tmp/
+*.exe
+*.test
+*.out
+
+# node_modules / フロントエンドビルド成果物
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+coverage/
+frontend/coverage/
+
+# ログ
+*.log
+
+# Docker
+.docker/
+
+# エディタ
+.idea/
+.vscode/
+*.swp
+*.swo
