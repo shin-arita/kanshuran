@@ -131,8 +131,92 @@ gh pr comment <PR番号> --body "@codex review"
 詳細な指示をMarkdownファイルで渡す場合:
 
 ```bash
-gh pr comment <PR番号> --body-file docs/ai/review/example.md
+gh pr comment <PR番号> --body-file docs/ai/codex_review_template.md
 ```
+
+---
+
+## Make AI運用
+
+Makefileから直接AI運用コマンドを実行できます。  
+`gh auth login` および `claude` CLI が利用可能であることを前提とします。
+
+### Claude Code に指示を渡す
+
+```bash
+make ai-order FILE=docs/ai/order/example.md
+```
+
+`docs/ai/order/` に指示MDを置いて呼び出します。  
+`FILE` 未指定時はエラーになります。
+
+### Codex review依頼
+
+```bash
+make codex-review PR=1
+```
+
+内部実行: `gh pr comment 1 --body "@codex review"`  
+`PR` 未指定時はエラーになります。
+
+### Codex review依頼（日本語）
+
+```bash
+make codex-review-ja PR=1
+```
+
+Codexへ日本語レビューを強く依頼します（英語禁止・日本語のみ）。  
+`PR` 未指定時はエラーになります。
+
+### Codexへ日本語で質問
+
+```bash
+make codex-ask-ja PR=1 BODY="このPRを日本語で要約してください。重要な指摘があれば日本語で教えてください。"
+```
+
+Codexへの会話モード質問用です。`codex-review-ja` との使い分け:
+
+- `codex-review-ja` — レビューBot起動（`@codex review` トリガー）
+- `codex-ask-ja` — 会話モードでの質問（`@codex` 呼びかけ）
+
+`PR` または `BODY` 未指定時はエラーになります。
+
+### PRのreviews / comments取得
+
+```bash
+make pr-reviews PR=1
+```
+
+内部実行: `gh pr view 1 --json reviews,comments`  
+ReviewとコメントをJSON形式で取得します。`PR` 未指定時はエラーになります。
+
+### PRコメント確認
+
+```bash
+make pr-comments PR=1
+```
+
+内部実行: `gh pr view 1 --comments`
+
+### Checks確認
+
+```bash
+make pr-checks PR=1
+```
+
+内部実行: `gh pr checks 1`
+
+### gh単体コマンドとの使い分け
+
+| 用途 | Make版 | gh単体 |
+|------|--------|--------|
+| Codex review依頼 | `make codex-review PR=1` | `gh pr comment 1 --body "@codex review"` |
+| Codex review依頼（日本語） | `make codex-review-ja PR=1` | — |
+| Codexへ日本語質問 | `make codex-ask-ja PR=1 BODY="..."` | — |
+| Reviews/Comments取得 | `make pr-reviews PR=1` | `gh pr view 1 --json reviews,comments` |
+| Checks確認 | `make pr-checks PR=1` | `gh pr checks 1` |
+| コメント確認 | `make pr-comments PR=1` | `gh pr view 1 --comments` |
+| 指示MDをClaude Codeへ | `make ai-order FILE=...` | `cat ... \| claude` |
 
 ---
 
