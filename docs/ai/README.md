@@ -28,6 +28,33 @@ AIはmainブランチへ直接mergeしません。
 
 ---
 
+## GitHub CLI / Make AI運用
+
+GitHub操作はCLIを推奨します。`gh auth login` 済みを前提とします。
+
+```bash
+gh auth status                                  # 認証確認
+gh pr view 1                                    # PR確認
+gh pr checks 1                                  # Checks確認
+gh pr comment 1 --body "@codex review"          # Codex review依頼
+```
+
+Makefileからも実行できます。
+
+```bash
+make codex-review PR=1                          # Codex review依頼（英語）
+make codex-review-ja PR=1                       # Codex review依頼（日本語のみ・英語禁止）
+make codex-ask-ja PR=1 BODY="質問内容"           # Codexへ日本語質問（会話モード）
+make pr-reviews PR=1                            # Reviews/CommentsをJSONで取得
+make pr-checks PR=1                             # Checks確認
+make pr-comments PR=1                           # コメント確認
+make ai-order FILE=docs/ai/order/example.md     # Claude Codeへ指示
+```
+
+詳細は [workflow.md](./workflow.md) を参照してください。
+
+---
+
 ## 参照すべきドキュメント
 
 レビュー・実装前に以下を必ず参照してください。

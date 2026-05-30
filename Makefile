@@ -1,5 +1,6 @@
 .PHONY: up restart build rebuild down destroy logs ps api frontend db \
-        fmt fmt-check lint test check
+        fmt fmt-check lint test check \
+        ai-order codex-review codex-review-ja codex-ask-ja pr-comments pr-checks pr-reviews
 
 up:
 	docker compose up -d
@@ -49,3 +50,49 @@ test:
 	docker compose exec frontend npm run test
 
 check: fmt-check lint test
+
+# AI運用
+ai-order:
+ifndef FILE
+	$(error FILE is required. Usage: make ai-order FILE=docs/ai/order/example.md)
+endif
+	cat $(FILE) | claude
+
+codex-review:
+ifndef PR
+	$(error PR is required. Usage: make codex-review PR=1)
+endif
+	gh pr comment $(PR) --body "@codex review"
+
+codex-review-ja:
+ifndef PR
+	$(error PR is required. Usage: make codex-review-ja PR=1)
+endif
+	printf '@codex review\n\nIMPORTANT:\n日本語でのみレビューしてください。\n英語は禁止です。\n結論、指摘、理由、修正提案はすべて日本語で書いてください。' | gh pr comment $(PR) --body-file -
+
+codex-ask-ja:
+ifndef PR
+	$(error PR is required. Usage: make codex-ask-ja PR=1 BODY="質問内容")
+endif
+ifndef BODY
+	$(error BODY is required. Usage: make codex-ask-ja PR=1 BODY="質問内容")
+endif
+	printf '@codex\n\n%s' "$(BODY)" | gh pr comment $(PR) --body-file -
+
+pr-comments:
+ifndef PR
+	$(error PR is required. Usage: make pr-comments PR=1)
+endif
+	gh pr view $(PR) --comments
+
+pr-checks:
+ifndef PR
+	$(error PR is required. Usage: make pr-checks PR=1)
+endif
+	gh pr checks $(PR)
+
+pr-reviews:
+ifndef PR
+	$(error PR is required. Usage: make pr-reviews PR=1)
+endif
+	gh pr view $(PR) --json reviews,comments

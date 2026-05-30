@@ -30,7 +30,7 @@ jobs:
         working-directory: api
         run: go vet ./...
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           working-directory: api
           version: v2.11.4
@@ -46,9 +46,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      # npm install を使用する理由:
+      # 開発機が macOS ARM64 のため package-lock.json に
+      # linux-x64 用 Rollup optional package が含まれない。
+      # npm ci はロックにないパッケージをインストールできないため
+      # CI (Linux x64) では npm install が必要。
       - name: npm install
         working-directory: frontend
         run: npm install
+      # macOS ARM64 の package-lock.json には linux-x64 用 Rollup が含まれない。
+      # GitHub Actions (Linux x64) で Vitest/Vite を動かすために明示インストール。
+      - name: install Rollup Linux x64 optional package
+        working-directory: frontend
+        run: npm install --no-save @rollup/rollup-linux-x64-gnu@4.60.4
       - name: lint
         working-directory: frontend
         run: npm run lint
