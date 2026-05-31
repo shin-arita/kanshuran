@@ -49,7 +49,7 @@ services:
     command: sh -c "go mod download && air -c .air.toml"
 
   db:
-    image: postgres:16-alpine
+    image: groonga/pgroonga:3.2.5-alpine-16
     container_name: kanshuran-db
     ports:
       - "${DB_PUBLISH_PORT:-5432}:5432"
