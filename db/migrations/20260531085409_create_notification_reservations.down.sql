@@ -1,0 +1,4 @@
+DROP INDEX IF EXISTS notification_reservations_store_id_bottle_id_idx;
+DROP INDEX IF EXISTS notification_reservations_store_id_notification_batch_id_idx;
+DROP INDEX IF EXISTS notification_reservations_store_id_scheduled_at_idx;
+DROP TABLE IF EXISTS notification_reservations;
