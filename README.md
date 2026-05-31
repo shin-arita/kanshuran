@@ -37,6 +37,42 @@ make destroy     # コンテナ + volume 削除
 
 ---
 
+## Migration 実行方法
+
+DB は PGroonga 同梱イメージ (`groonga/pgroonga:3.2.5-alpine-16`) を使用しています。
+
+### 初回 / イメージ変更後
+
+```bash
+make build   # api イメージ再ビルド (golang-migrate が追加されています)
+make up
+```
+
+### migration 適用
+
+```bash
+make migrate-up
+```
+
+### 1ステップ ロールバック
+
+```bash
+make migrate-down
+```
+
+### PGroonga extension 確認
+
+```bash
+docker compose exec db psql -U kanshuran -d kanshuran \
+  -c "SELECT extname, extversion FROM pg_extension WHERE extname = 'pgroonga';"
+```
+
+### migration ファイルの場所
+
+`db/migrations/` 配下に `YYYYMMDDHHMMSS_create_*.{up,down}.sql` 形式で配置します。
+
+---
+
 ## コンテナ一覧
 
 | サービス | 説明 |
