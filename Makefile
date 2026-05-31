@@ -1,5 +1,6 @@
 .PHONY: up restart build rebuild down destroy logs ps api frontend db \
         fmt fmt-check lint test check \
+        migrate-up migrate-down \
         ai-order codex-review codex-review-ja codex-ask-ja pr-comments pr-checks pr-reviews
 
 up:
@@ -50,6 +51,12 @@ test:
 	docker compose exec frontend npm run test
 
 check: fmt-check lint test
+
+migrate-up:
+	docker compose exec api sh -lc 'migrate -path /db/migrations -database "$$DATABASE_URL" up'
+
+migrate-down:
+	docker compose exec api sh -lc 'migrate -path /db/migrations -database "$$DATABASE_URL" down 1'
 
 # AI運用
 ai-order:

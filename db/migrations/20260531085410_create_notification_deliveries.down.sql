@@ -1,0 +1,4 @@
+DROP INDEX IF EXISTS notification_deliveries_store_id_line_customer_id_idx;
+DROP INDEX IF EXISTS notification_deliveries_store_id_reservation_id_idx;
+DROP INDEX IF EXISTS notification_deliveries_store_id_status_idx;
+DROP TABLE IF EXISTS notification_deliveries;
